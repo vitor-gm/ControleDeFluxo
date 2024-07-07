@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 
 public class Contador {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParametrosInvalidosException {
 
         Scanner terminal = new Scanner(System.in);
 
@@ -13,13 +13,13 @@ public class Contador {
         int segundoNumero = terminal.nextInt();
 
         try {
-
             contar(primeiroNumero, segundoNumero);
-
         }catch(ParametrosInvalidosException e){
-
-            System.out.println("O segundo número deve ser maior que o primeiro.");
-
+            throw new ParametrosInvalidosException(e.getMessage());
+        }finally {
+            if(terminal != null) {
+                terminal.close();
+            }
         }
 
     }
@@ -27,7 +27,7 @@ public class Contador {
     static void contar(int primeiroNumero, int segundoNumero) throws ParametrosInvalidosException {
 
         if(segundoNumero < primeiroNumero){
-            throw new ParametrosInvalidosException();
+            throw new ParametrosInvalidosException("O segundo número deve ser maior que o primeiro!");
         }else{
             int resultado = segundoNumero - primeiroNumero;
             for(int i = 1; i <= resultado; i++){
